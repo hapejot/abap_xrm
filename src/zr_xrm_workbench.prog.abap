@@ -5,6 +5,30 @@
 *&---------------------------------------------------------------------*
 REPORT zr_xrm_workbench.
 
+CLASS lcl_screen_dispatcher DEFINITION.
+  PUBLIC SECTION.
+    INTERFACES zif_xrm_screen_dispatcher.
+    ALIASES: call_screen FOR zif_xrm_screen_dispatcher~call_screen,
+     call_screen_at FOR zif_xrm_screen_dispatcher~call_screen_at.
+
+ENDCLASS.
+
+CLASS lcl_screen_dispatcher IMPLEMENTATION.
+
+  METHOD call_screen.
+    CALL SCREEN i_dynnr.
+  ENDMETHOD.
+
+  METHOD zif_xrm_screen_dispatcher~call_screen_at.
+
+    CALL SCREEN i_dynnr STARTING AT i_left i_top ENDING AT i_right i_bottom.
+  ENDMETHOD.
+
+ENDCLASS.
+
+
+
+
 CLASS lcl_solution_dialog DEFINITION .
 
   PUBLIC SECTION.
@@ -72,7 +96,7 @@ CLASS lcl_solution_cmd IMPLEMENTATION.
   METHOD execute.
 
     go_dlg = mo_dialog.
-    CALL SCREEN '0002' STARTING AT 10 10 ENDING AT 100 27.
+    CALL SCREEN 2 STARTING AT 10 10 ENDING AT 100 27.
     CLEAR go_dlg.
 
   ENDMETHOD.
@@ -80,30 +104,19 @@ CLASS lcl_solution_cmd IMPLEMENTATION.
 ENDCLASS.
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MAIN
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 INITIALIZATION.
-  DATA(lo_stat) = NEW zcl_xrm_app_state( iv_appname = 'MAIN-VIEW-SETUP' ).
-  CREATE OBJECT go_vm TYPE zcl_bc_view_manager EXPORTING io_stat = lo_stat.
-  go_vm->register(  iv_name = 'EXIT'        ir_cmd = NEW zcl_bc_cmd_exit(  ) ).
-  go_vm->register(  iv_name = 'PRJ_OPEN'    ir_cmd = NEW lcl_solution_cmd( ) ).
+  DATA(lo_app) = NEW zcl_xrm_workbench( ).
 
-  DATA(lo_form) = CAST zif_bc_control( NEW zcl_bc_form( io_stat = lo_stat ) ).
-  go_vm->add( iv_path = '.form'             iv_ctrl = lo_form ).
-  go_vm->add( iv_path = '.form.cont'        iv_ctrl = NEW zcl_bc_split( ) ).
-  DATA(lo_tree) = NEW zcl_bc_list_tree( io_stat = lo_stat ).
-  go_vm->add( iv_path = '.form.cont.1'      iv_ctrl = lo_tree ).
-" setup solution hierarchy with an internal table
-"
-  DATA(lo_solution_hierarch) = NEW zcl_bc_hierarchy( ).
-
-  lo_tree->set_hierarchy( i_hier = lo_solution_hierarch ).
-  go_vm->apply_settings( io_ctrl = lo_form ).
-  lo_form->init( ).
-  lo_stat->sync( ).
-  CALL SCREEN '0001'.
+  lo_app->initialization( ).
+  go_vm = lo_app->get_vm( ).
+  go_vm->register( iv_name = 'PRJ_OPEN'    ir_cmd = NEW lcl_solution_cmd( ) ).
+  CALL SCREEN 1.
 
 *&---------------------------------------------------------------------*
 *&      Module  PBO_GEN  OUTPUT

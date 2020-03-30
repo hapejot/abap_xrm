@@ -14,6 +14,9 @@
     <item>/.gitlab-ci.yml</item>
     <item>/abaplint.json</item>
     <item>/azure-pipelines.yml</item>
+    <item>/src/data/Default_1_0.zip</item>
+    <item>/src/data/Inwerken_1_0_0_0.zip</item>
+    <item>/src/data/QProfile_1_0_0_0.zip</item>
    </IGNORE>
   </DATA>
  </asx:values>

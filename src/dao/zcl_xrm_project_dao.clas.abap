@@ -1,0 +1,50 @@
+class ZCL_XRM_PROJECT_DAO definition
+  public
+  final
+  create public .
+
+public section.
+
+  interfaces ZIF_XRM_DAO .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS ZCL_XRM_PROJECT_DAO IMPLEMENTATION.
+
+
+  METHOD ZIF_XRM_DAO~ADD_PLUGIN.
+  ENDMETHOD.
+
+
+  METHOD ZIF_XRM_DAO~CREATE.
+    INSERT INTO zxrm_entity VALUES is_row.
+  ENDMETHOD.
+
+
+  METHOD ZIF_XRM_DAO~DELETE.
+    DELETE FROM zxrm_entity WHERE id = @id.
+  ENDMETHOD.
+
+
+  METHOD ZIF_XRM_DAO~RETRIEVE.
+    SELECT SINGLE * FROM zxrm_entity
+              WHERE id = @id INTO @DATA(ls_row).
+  ENDMETHOD.
+
+
+  METHOD ZIF_XRM_DAO~RETRIEVE_MULTIPLE.
+  ENDMETHOD.
+
+
+  METHOD ZIF_XRM_DAO~SAVE.
+    MODIFY zxrm_entity FROM @is_row.
+  ENDMETHOD.
+
+
+  METHOD ZIF_XRM_DAO~UPDATE.
+    UPDATE zxrm_entity FROM @is_row.
+  ENDMETHOD.
+ENDCLASS.

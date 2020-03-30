@@ -3,14 +3,21 @@
 *&---------------------------------------------------------------------*
 *&
 *&---------------------------------------------------------------------*
-REPORT ZR_XRM_IMPORT_PROJECT LINE-SIZE 1000.
+REPORT zr_xrm_import_project LINE-SIZE 1000.
 
-data: filename type string value 'C:\w\notes\sap\abap_xrm\customizations.xml'.
+DATA: filename  TYPE string VALUE 'C:\w\notes\sap\abap_xrm\customizations.xml',
+      sol_fname TYPE string VALUE 'C:\w\notes\sap\abap_xrm\solution.xml'.
 
 
 
-data(lo_front) = new zcl_bc_frontend( ).
-data(lv_data) = lo_front->from_file( filename ).
-data(lo_proj) = new zcl_xrm_project( ).
-lo_proj->import_from_xstring( lv_data ).
+
+DATA(lo_proj) = NEW zcl_xrm_project( ).
+
+DATA(lo_front) = NEW zcl_bc_frontend( ).
+
+lo_proj->solution_from_xstring( lo_front->from_file( sol_fname ) ).
+lo_proj->import_from_xstring( lo_front->from_file( filename ) ).
+
+DELETE FROM zxrm_attribute WHERE entityid = ''.
+
 lo_proj->save( ).

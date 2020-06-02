@@ -5,21 +5,21 @@
 *&---------------------------------------------------------------------*
 REPORT zr_xrm_workbench.
 
-CLASS lcl_screen_dispatcher DEFINITION.
+CLASS lcl_screen_adapter DEFINITION.
   PUBLIC SECTION.
-    INTERFACES zif_xrm_screen_dispatcher.
-    ALIASES: call_screen FOR zif_xrm_screen_dispatcher~call_screen,
-     call_screen_at FOR zif_xrm_screen_dispatcher~call_screen_at.
+    INTERFACES zif_xrm_screen_adapter.
+    ALIASES: call_screen FOR zif_xrm_screen_adapter~call_screen,
+     call_screen_at FOR zif_xrm_screen_adapter~call_screen_at.
 
 ENDCLASS.
 
-CLASS lcl_screen_dispatcher IMPLEMENTATION.
+CLASS lcl_screen_adapter IMPLEMENTATION.
 
   METHOD call_screen.
     CALL SCREEN i_dynnr.
   ENDMETHOD.
 
-  METHOD zif_xrm_screen_dispatcher~call_screen_at.
+  METHOD zif_xrm_screen_adapter~call_screen_at.
 
     CALL SCREEN i_dynnr STARTING AT i_left i_top ENDING AT i_right i_bottom.
   ENDMETHOD.
@@ -112,7 +112,6 @@ ENDCLASS.
 
 INITIALIZATION.
   DATA(lo_app) = NEW zcl_xrm_workbench( ).
-
   lo_app->initialization( ).
   go_vm = lo_app->get_vm( ).
   go_vm->register( iv_name = 'PRJ_OPEN'    ir_cmd = NEW lcl_solution_cmd( ) ).
@@ -130,6 +129,7 @@ MODULE pbo_gen OUTPUT.
 *  SET PF-STATUS 'STATUS'.
   SET TITLEBAR 'TITLE'.
 ENDMODULE.
+
 *&---------------------------------------------------------------------*
 *&      Module  PAI_GEN  INPUT
 *&---------------------------------------------------------------------*
@@ -143,6 +143,7 @@ MODULE pai_gen INPUT.
     ).
   ENDIF.
 ENDMODULE.
+
 *&---------------------------------------------------------------------*
 *& Module PBO_DLG OUTPUT
 *&---------------------------------------------------------------------*
@@ -155,6 +156,7 @@ MODULE pbo_dlg OUTPUT.
   SET PF-STATUS 'DLG_STATUS'.
 * SET TITLEBAR 'xxx'.
 ENDMODULE.
+
 *&---------------------------------------------------------------------*
 *&      Module  PAI_DLG  INPUT
 *&---------------------------------------------------------------------*

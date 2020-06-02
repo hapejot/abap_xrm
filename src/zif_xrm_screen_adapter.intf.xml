@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOINTERF>
-    <CLSNAME>ZIF_XRM_SCREEN_DISPATCHER</CLSNAME>
+    <CLSNAME>ZIF_XRM_SCREEN_ADAPTER</CLSNAME>
     <LANGU>E</LANGU>
     <DESCRIPT>dispatching screens in a program environment</DESCRIPT>
     <EXPOSURE>2</EXPOSURE>

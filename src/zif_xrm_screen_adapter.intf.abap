@@ -1,4 +1,4 @@
-INTERFACE zif_xrm_screen_dispatcher
+INTERFACE zif_xrm_screen_adapter
   PUBLIC .
   METHODS call_screen       IMPORTING
                               i_dynnr TYPE dynnr.

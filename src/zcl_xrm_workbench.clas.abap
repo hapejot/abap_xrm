@@ -9,6 +9,7 @@ CLASS zcl_xrm_workbench DEFINITION
     METHODS get_vm
       RETURNING
         VALUE(r_result) TYPE REF TO zif_bc_view_manager.
+    METHODS constructor.
   PROTECTED SECTION.
   PRIVATE SECTION.
     DATA:
@@ -19,7 +20,16 @@ ENDCLASS.
 
 
 CLASS zcl_xrm_workbench IMPLEMENTATION.
+  METHOD constructor.
+    TYPES: BEGIN OF s,
+             name TYPE string,
+           END OF s.
+    DATA: services TYPE STANDARD TABLE OF s.
 
+    services = VALUE #(
+            ( name = 'TREE' )
+            ).
+  ENDMETHOD.
   METHOD initialization.
     DATA lt_project TYPE STANDARD TABLE OF zxrm_project.
     DATA: lo_form TYPE REF TO zif_bc_control.

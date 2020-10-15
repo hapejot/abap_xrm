@@ -6,8 +6,8 @@
 REPORT zr_xrm_dynpro_to_xml LINE-SIZE 300.
 
 
-PARAMETERS: program TYPE progname,
-            dynpro  TYPE sychar04.
+PARAMETERS: program TYPE progname DEFAULT 'YRS_BC_MYDD',
+            dynpro  TYPE sychar04 DEFAULT '2'.
 
 DATA:
   BEGIN OF lx_data,
@@ -42,20 +42,27 @@ IF sy-subrc = 0.
   lo_xml->set_data(
       ir_data = REF #( lx_data )
   ).
-  DATA(indent) = 10.
-  DATA(lt_lines) = VALUE string_table( ).
-  lo_xml->get_xml_as_table( CHANGING ct_lines = lt_lines ).
-  LOOP AT lt_lines INTO DATA(lv_line).
-    WRITE AT /indent lv_line NO-GAP.
-    FIND '</' IN lv_line.
-    IF sy-subrc = 0.
-      ADD -2 TO indent.
-    ELSE.
-      FIND '/>' IN lv_line.
-      IF sy-subrc > 0.
-        ADD 2 TO indent.
-      ENDIF.
-    ENDIF.
-  ENDLOOP.
+
+  CALL METHOD lo_xml->parse
+    IMPORTING
+      xmltab = DATA(xmltab).
+
+  cl_demo_output=>display( xmltab ).
+
+*  DATA(indent) = 10.
+*  DATA(lt_lines) = VALUE string_table( ).
+*  lo_xml->get_xml_as_table( CHANGING ct_lines = lt_lines ).
+*  LOOP AT lt_lines INTO DATA(lv_line).
+*    WRITE AT /indent lv_line NO-GAP.
+*    FIND '</' IN lv_line.
+*    IF sy-subrc = 0.
+*      ADD -2 TO indent.
+*    ELSE.
+*      FIND '/>' IN lv_line.
+*      IF sy-subrc > 0.
+*        ADD 2 TO indent.
+*      ENDIF.
+*    ENDIF.
+*  ENDLOOP.
 
 ENDIF.

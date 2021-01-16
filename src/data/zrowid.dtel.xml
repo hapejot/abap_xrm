@@ -10,6 +10,7 @@
     <DDTEXT>rowid</DDTEXT>
     <SCRTEXT_S>rowid</SCRTEXT_S>
     <DTELMASTER>E</DTELMASTER>
+    <DEFFDNAME>ID</DEFFDNAME>
     <REFKIND>D</REFKIND>
    </DD04V>
   </asx:values>

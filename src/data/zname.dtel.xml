@@ -10,6 +10,7 @@
     <DDTEXT>Name</DDTEXT>
     <SCRTEXT_S>name</SCRTEXT_S>
     <DTELMASTER>E</DTELMASTER>
+    <DEFFDNAME>NAME</DEFFDNAME>
     <REFKIND>D</REFKIND>
    </DD04V>
   </asx:values>
